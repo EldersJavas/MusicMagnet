@@ -3,9 +3,11 @@
 package main
 
 import (
+	"fmt"
 	"github.com/ebiten/emoji"
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/audio"
+	"github.com/hajimehoshi/ebiten/v2/inpututil"
 	"github.com/hajimehoshi/ebiten/v2/text"
 	"image/color"
 	"math/rand"
@@ -16,10 +18,26 @@ type MainScene struct {
 	bgmPlayer     *audio.Player
 	seStartPlayer *audio.Player
 	seEndPlayer   *audio.Player
+	MX            int
+	MY            int
 }
 
 func (s *MainScene) Update(sceneSwitcher SceneSwitcher) error {
-	//TODO implement me
+	s.MX, s.MY = ebiten.CursorPosition()
+
+	if inpututil.IsMouseButtonJustReleased(ebiten.MouseButtonLeft) {
+
+		if IsInPos(float64(s.MX), float64(s.MY), 20, 930, 230, 1040) {
+			go sceneSwitcher.AboutScene()
+		}
+		if IsInPos(float64(s.MX), float64(s.MY), 670, 720, 1250, 870) {
+			go sceneSwitcher.ChoScene()
+		}
+		if IsInPos(float64(s.MX), float64(s.MY), 1700, 0, 1920, 120) {
+			go ChangeLang()
+		}
+	}
+
 	return nil
 }
 
@@ -54,13 +72,37 @@ func (s *MainScene) Draw(screen *ebiten.Image) {
 		text.Draw(screen, line, f, x, y, color.RGBA{236, 109, 136, 0xff})
 	}
 	lines = []string{
-		Tr("Ab"),
+		GetLang(),
 	}
 	for _, line := range lines {
 		f := spaceAgeSmall
-		//r := text.BoundString(f, line)
-		x := 30
-		y := sh - 100
-		text.Draw(screen, line, f, x, y, color.RGBA{236, 228, 197, 0xff})
+		r := text.BoundString(f, line)
+		x := sw - r.Max.X
+		y := 100
+		text.Draw(screen, line, f, x, y, color.RGBA{114, 139, 198, 0xff})
+
+		// About 20,900-300,980
+		lines = []string{
+			Tr("Ab"),
+		}
+		for _, line := range lines {
+			f := spaceAgeSmall
+			//r := text.BoundString(f, line)
+			x := 30
+			y := sh - 60
+			text.Draw(screen, line, f, x, y, color.RGBA{236, 228, 197, 0xff})
+
+			//Pos debug
+			lines = []string{fmt.Sprintf("x:%v,Y:%v", s.MX, s.MY)}
+			for _, line := range lines {
+				f := DebugFace
+				r := text.BoundString(f, line)
+				x := sw - r.Max.X - 100
+				y := sh - 60
+				text.Draw(screen, line, f, x, y, color.RGBA{1, 1, 1, 0xff})
+			}
+			//ebitenutil.DebugPrint(screen, )
+
+		}
 	}
 }

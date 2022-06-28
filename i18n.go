@@ -21,7 +21,8 @@ var I18nEN = map[string]string{
 	"Point": "Point",
 	"Lic":   "Apache 2.0",
 	"Cp":    "EbitenPot 2021-2022",
-	"Web":   "",
+	"Web":   "github.com/EldersJavas/MusicMagnet",
+	"Back":  "Back",
 }
 var I18nZH = map[string]string{
 	"code":  "zh",
@@ -36,6 +37,8 @@ var I18nZH = map[string]string{
 	"Point": "得分",
 	"Lic":   "Apache 2.0",
 	"Cp":    "EbitenPot 2021-2022",
+	"Web":   "github.com/EldersJavas/MusicMagnet",
+	"Back":  "返回",
 }
 
 func Tr(str string) string {
@@ -46,4 +49,23 @@ func Tr(str string) string {
 		return I18nZH[str]
 	}
 	return "No String"
+}
+
+func GetLang() string {
+	switch Langs {
+	case EN:
+		return "EN"
+	case ZH:
+		return "ZH"
+	}
+	return ""
+}
+func ChangeLang() {
+
+	if Langs < 1 {
+		Langs++
+	} else {
+		Langs = 0
+	}
+
 }

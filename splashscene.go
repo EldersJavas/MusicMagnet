@@ -50,7 +50,7 @@ func (s *SplashScene) Update(sceneSwitcher SceneSwitcher) error {
 		}, ebiten.MaxTPS()/2))
 		s.sequence.AddTask(func() error {
 			s.splashAlpha = 0
-			sceneSwitcher.BackToMainScene()
+			sceneSwitcher.MainScene()
 			return TaskEnded
 		})
 	}
@@ -68,4 +68,5 @@ func (s *SplashScene) Draw(screen *ebiten.Image) {
 	op := &ebiten.DrawImageOptions{}
 	op.ColorM.Scale(1, 1, 1, s.splashAlpha)
 	screen.DrawImage(s.splashImg, op)
+
 }

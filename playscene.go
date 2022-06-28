@@ -22,5 +22,5 @@ func (s *PlayScene) Update(sceneSwitcher SceneSwitcher) error {
 
 func (s *PlayScene) Draw(screen *ebiten.Image) {
 	screen.Fill(color.RGBA{247, 201, 216, 0xff})
-
+	_, _ = screen.Size()
 }

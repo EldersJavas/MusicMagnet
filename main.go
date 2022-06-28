@@ -7,10 +7,15 @@ import (
 	"fmt"
 	"github.com/hajimehoshi/ebiten/v2"
 	"os"
+	"time"
 )
 
 type SceneSwitcher interface {
-	BackToMainScene()
+	ChoScene()
+	MainScene()
+	PlayScene()
+	LoadScene()
+	AboutScene()
 }
 
 type Scene interface {
@@ -42,8 +47,25 @@ func (g *Game) Layout(outsideWidth, outsideHeight int) (screenWidth, screenHeigh
 	return 1920, 1080
 }
 
-func (g *Game) BackToMainScene() {
+func (g *Game) MainScene() {
+	time.Sleep(time.Millisecond * 100)
 	g.nextScene = &MainScene{}
+}
+func (g *Game) AboutScene() {
+	time.Sleep(time.Millisecond * 100)
+	g.nextScene = &AboutScene{}
+}
+func (g *Game) PlayScene() {
+	time.Sleep(time.Millisecond * 100)
+	g.nextScene = &PlayScene{}
+}
+func (g *Game) ChoScene() {
+	time.Sleep(time.Millisecond * 100)
+	g.nextScene = &ChooseScene{}
+}
+func (g *Game) LoadScene() {
+	time.Sleep(time.Millisecond * 100)
+	g.nextScene = &LoadingScene{}
 }
 
 //🎶♫♬♪♩¶♯♮♭🎵🎼🎶🧲⏱
@@ -52,17 +74,16 @@ func main() {
 	ebiten.SetWindowTitle("♪Music Magnet♪")
 	ebiten.SetMaxTPS(120)
 	ebiten.SetWindowResizingMode(ebiten.WindowResizingModeOnlyFullscreenEnabled)
-	if os.Args[1] == "-f" {
-		ebiten.SetFullscreen(true)
+	for _, arg := range os.Args {
+		switch arg {
+		case "-f":
+			ebiten.SetFullscreen(true)
+		case "-en":
+			Langs = EN
+		case "-zh":
+			Langs = ZH
+		}
 	}
-
-	switch os.Args[2] {
-	case "-en":
-		Langs = EN
-	case "-zh":
-		Langs = ZH
-	}
-
 	fmt.Printf("%v,%v,%v", os.Args, Langs, Tr("code"))
 	g := &Game{
 		scene: &SplashScene{},
