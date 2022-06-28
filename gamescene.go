@@ -6,16 +6,15 @@ package main
 import (
 	_ "embed"
 	"fmt"
-	"image/color"
-	"math"
-	"strings"
-
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/audio"
 	"github.com/hajimehoshi/ebiten/v2/audio/vorbis"
 	"github.com/hajimehoshi/ebiten/v2/audio/wav"
 	"github.com/hajimehoshi/ebiten/v2/inpututil"
 	"github.com/hajimehoshi/ebiten/v2/text"
+	"image/color"
+	"math"
+	"strings"
 )
 
 //go:embed bg.kage
@@ -211,7 +210,7 @@ func (g *GameScene) Draw(screen *ebiten.Image) {
 	// Render the background.
 	if g.bgAlpha > 0 {
 		sw, sh := screen.Size()
-		t := float32(g.gameState.PositionInMillimeter() % 1000) / 1000.0
+		t := float32(g.gameState.PositionInMillimeter()%1000) / 1000.0
 		v := float32(g.gameState.VelocityInMeterPerHour()) / 1000.0
 		screen.DrawRectShader(sw, sh, g.bgShader, &ebiten.DrawRectShaderOptions{
 			Uniforms: map[string]any{

@@ -1,9 +1,12 @@
+// SPDX-License-Identifier: Apache-2.0
+// SPDX-FileCopyrightText: 2022 Hajime Hoshi
+
 package main
 
-
-
 import (
+	"fmt"
 	"github.com/hajimehoshi/ebiten/v2"
+	"os"
 )
 
 type SceneSwitcher interface {
@@ -40,14 +43,19 @@ func (g *Game) Layout(outsideWidth, outsideHeight int) (screenWidth, screenHeigh
 }
 
 func (g *Game) SwitchToGameScene() {
-	g.nextScene = nil
+	g.nextScene = &GameScene{}
 }
 
+//🎶♫♬♪♩¶♯♮♭🎵🎼🎶🧲⏱
 func main() {
-	ebiten.SetWindowSize(960, 540)
-	ebiten.SetWindowTitle("Manual Linear Motor Car")
+	ebiten.SetWindowSize(1024, 576)
+	ebiten.SetWindowTitle("♪Music Magnet♪")
 	ebiten.SetMaxTPS(120)
 	ebiten.SetWindowResizingMode(ebiten.WindowResizingModeOnlyFullscreenEnabled)
+	if os.Args[0] == "-f" {
+		ebiten.SetFullscreen(true)
+	}
+	fmt.Sprintln(os.Args)
 	g := &Game{
 		scene: &SplashScene{},
 	}

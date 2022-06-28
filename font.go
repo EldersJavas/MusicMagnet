@@ -12,13 +12,13 @@ import (
 	"golang.org/x/image/font/opentype"
 )
 
-//go:embed resource
+//go:embed res
 var resourceRootFS embed.FS
 
 var resourceFS fs.FS
 
 func init() {
-	f, err := fs.Sub(resourceRootFS, "resource")
+	f, err := fs.Sub(resourceRootFS, "res")
 	if err != nil {
 		panic(err)
 	}
@@ -31,7 +31,7 @@ var (
 )
 
 func init() {
-	f, err := resourceFS.Open("spaceage.otf")
+	f, err := resourceFS.Open("fusion-pixel.otf")
 	if err != nil {
 		panic(err)
 	}
