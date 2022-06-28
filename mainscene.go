@@ -25,7 +25,7 @@ type MainScene struct {
 func (s *MainScene) Update(sceneSwitcher SceneSwitcher) error {
 	s.MX, s.MY = ebiten.CursorPosition()
 
-	if inpututil.IsMouseButtonJustReleased(ebiten.MouseButtonLeft) {
+	if ebiten.IsMouseButtonPressed(ebiten.MouseButtonLeft) {
 
 		if IsInPos(float64(s.MX), float64(s.MY), 20, 930, 230, 1040) {
 			go sceneSwitcher.AboutScene()
@@ -33,8 +33,11 @@ func (s *MainScene) Update(sceneSwitcher SceneSwitcher) error {
 		if IsInPos(float64(s.MX), float64(s.MY), 670, 720, 1250, 870) {
 			go sceneSwitcher.ChoScene()
 		}
+
+	}
+	if inpututil.IsMouseButtonJustReleased(ebiten.MouseButtonLeft) {
 		if IsInPos(float64(s.MX), float64(s.MY), 1700, 0, 1920, 120) {
-			go ChangeLang()
+			ChangeLang()
 		}
 	}
 

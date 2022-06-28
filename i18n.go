@@ -10,7 +10,7 @@ const (
 var Langs = EN
 var I18nEN = map[string]string{
 	"code":  "en",
-	"tt":    "Music Magnet",
+	"tt":    "♪Music Magnet♪",
 	"Play":  "Play!",
 	"ChMu":  "Choose Music",
 	"Ab":    "About",
@@ -26,7 +26,7 @@ var I18nEN = map[string]string{
 }
 var I18nZH = map[string]string{
 	"code":  "zh",
-	"tt":    "音乐磁力!",
+	"tt":    "♪音乐磁力♪",
 	"Play":  "开始游戏",
 	"ChMu":  "选择音乐",
 	"Ab":    "关于",
@@ -61,7 +61,6 @@ func GetLang() string {
 	return ""
 }
 func ChangeLang() {
-
 	if Langs < 1 {
 		Langs++
 	} else {

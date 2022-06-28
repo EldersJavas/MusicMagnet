@@ -72,7 +72,7 @@ func (g *Game) LoadScene() {
 func main() {
 	ebiten.SetWindowSize(1024, 576)
 	ebiten.SetWindowTitle("♪Music Magnet♪")
-	ebiten.SetMaxTPS(120)
+	ebiten.SetMaxTPS(30)
 	ebiten.SetWindowResizingMode(ebiten.WindowResizingModeOnlyFullscreenEnabled)
 	for _, arg := range os.Args {
 		switch arg {
