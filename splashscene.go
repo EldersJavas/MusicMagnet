@@ -50,7 +50,7 @@ func (s *SplashScene) Update(sceneSwitcher SceneSwitcher) error {
 		}, ebiten.MaxTPS()/2))
 		s.sequence.AddTask(func() error {
 			s.splashAlpha = 0
-			sceneSwitcher.SwitchToGameScene()
+			sceneSwitcher.BackToMainScene()
 			return TaskEnded
 		})
 	}

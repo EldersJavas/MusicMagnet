@@ -3,6 +3,7 @@ module github.com/EldersJavas/MusicMagnet
 go 1.18
 
 require (
+	github.com/ebiten/emoji v0.0.0-20211125104152-2c1b55029dbd
 	github.com/hajimehoshi/ebiten/v2 v2.3.5
 	golang.org/x/image v0.0.0-20220321031419-a8550c1d254a
 )
@@ -10,7 +11,6 @@ require (
 require (
 	github.com/go-gl/glfw/v3.3/glfw v0.0.0-20220320163800-277f93cfa958 // indirect
 	github.com/gofrs/flock v0.8.1 // indirect
-	github.com/hajimehoshi/go-mp3 v0.3.3 // indirect
 	github.com/hajimehoshi/oto/v2 v2.1.0 // indirect
 	github.com/jezek/xgb v1.0.0 // indirect
 	github.com/jfreymuth/oggvorbis v1.0.3 // indirect

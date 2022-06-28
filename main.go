@@ -10,7 +10,7 @@ import (
 )
 
 type SceneSwitcher interface {
-	SwitchToGameScene()
+	BackToMainScene()
 }
 
 type Scene interface {
@@ -42,8 +42,8 @@ func (g *Game) Layout(outsideWidth, outsideHeight int) (screenWidth, screenHeigh
 	return 1920, 1080
 }
 
-func (g *Game) SwitchToGameScene() {
-	g.nextScene = &GameScene{}
+func (g *Game) BackToMainScene() {
+	g.nextScene = &MainScene{}
 }
 
 //🎶♫♬♪♩¶♯♮♭🎵🎼🎶🧲⏱
@@ -52,10 +52,18 @@ func main() {
 	ebiten.SetWindowTitle("♪Music Magnet♪")
 	ebiten.SetMaxTPS(120)
 	ebiten.SetWindowResizingMode(ebiten.WindowResizingModeOnlyFullscreenEnabled)
-	if os.Args[0] == "-f" {
+	if os.Args[1] == "-f" {
 		ebiten.SetFullscreen(true)
 	}
-	fmt.Sprintln(os.Args)
+
+	switch os.Args[2] {
+	case "-en":
+		Langs = EN
+	case "-zh":
+		Langs = ZH
+	}
+
+	fmt.Printf("%v,%v,%v", os.Args, Langs, Tr("code"))
 	g := &Game{
 		scene: &SplashScene{},
 	}
