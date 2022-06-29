@@ -120,7 +120,6 @@ func (g *GPlayer) BGMBegain() error {
 			return err
 		}
 		defer f.Close()
-
 		decoded, err := vorbis.DecodeWithSampleRate(sampleRate, f)
 		if err != nil {
 			return err
