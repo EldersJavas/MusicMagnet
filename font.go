@@ -15,15 +15,7 @@ import (
 //go:embed res
 var resourceRootFS embed.FS
 
-var resourceFS fs.FS
-
-func init() {
-	f, err := fs.Sub(resourceRootFS, "res")
-	if err != nil {
-		panic(err)
-	}
-	resourceFS = f
-}
+var ResourceFS fs.FS
 
 var (
 	spaceAgeBig   font.Face
@@ -32,7 +24,7 @@ var (
 )
 
 func init() {
-	f, err := resourceFS.Open("fusion-pixel.otf")
+	f, err := ResourceFS.Open("fusion-pixel.otf")
 	if err != nil {
 		panic(err)
 	}

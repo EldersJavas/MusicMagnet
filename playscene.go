@@ -17,7 +17,7 @@ import (
 
 type PlayScene struct {
 	MuN          int
-	MuC          *Music
+	MuC          Music
 	Start        bool
 	PointC       int
 	audioContext *audio.Context
@@ -43,14 +43,22 @@ func (s *PlayScene) Update(sceneSwitcher SceneSwitcher) error {
 		switch s.MuN {
 		case 0:
 			s.MuC = MusicMap["BadApple"]
-			decoded, _ := mp3.DecodeWithSampleRate(sampleRate, s.MuC.Voice)
-			p, _ := s.audioContext.NewPlayer(decoded)
+			LogP(s.MuC)
+			decoded, err := mp3.DecodeWithSampleRate(sampleRate, s.MuC.Voice)
+			LogP(decoded, err)
+			loop := audio.NewInfiniteLoop(decoded, decoded.Length())
+			p, err := s.audioContext.NewPlayer(loop)
+			LogP(p, err)
 			s.PlayMusic = p
 			s.PlayMusic.Pause()
 		case 1:
 			s.MuC = MusicMap["AnDieFreude"]
-			decoded, _ := wav.DecodeWithSampleRate(sampleRate, s.MuC.Voice)
-			p, _ := s.audioContext.NewPlayer(decoded)
+			LogP(s.MuC)
+			decoded, err := wav.DecodeWithSampleRate(sampleRate, s.MuC.Voice)
+			LogP(decoded)
+			loop := audio.NewInfiniteLoop(decoded, decoded.Length())
+			p, err := s.audioContext.NewPlayer(loop)
+			LogP(err)
 			s.PlayMusic = p
 			s.PlayMusic.Pause()
 		}

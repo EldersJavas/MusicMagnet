@@ -4,11 +4,10 @@
 package main
 
 import (
-	"image"
-	_ "image/png"
-
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/inpututil"
+	"image"
+	_ "image/png"
 )
 
 type SplashScene struct {
@@ -19,7 +18,7 @@ type SplashScene struct {
 
 func (s *SplashScene) Update(sceneSwitcher SceneSwitcher) error {
 	if s.splashImg == nil {
-		f, err := resourceFS.Open("splash_1920x1080_black.png")
+		f, err := ResourceFS.Open("splash_1920x1080_black.png")
 		if err != nil {
 			return err
 		}

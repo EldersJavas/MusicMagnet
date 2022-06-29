@@ -115,7 +115,7 @@ func (g *GPlayer) BGMBegain() error {
 	const sampleRate = 44100
 	g.audioContext = audio.NewContext(sampleRate)
 	{
-		f, err := resourceFS.Open("bgm.ogg")
+		f, err := ResourceFS.Open("bgm.ogg")
 		if err != nil {
 			return err
 		}

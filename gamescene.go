@@ -141,7 +141,7 @@ func (g *GameScene) Update(sceneSwitcher SceneSwitcher) error {
 		const sampleRate = 48000
 		g.audioContext = audio.NewContext(sampleRate)
 		{
-			f, err := resourceFS.Open("bgm.ogg")
+			f, err := ResourceFS.Open("bgm.ogg")
 			if err != nil {
 				return err
 			}
@@ -162,7 +162,7 @@ func (g *GameScene) Update(sceneSwitcher SceneSwitcher) error {
 			g.bgmPlayer.Play()
 		}
 		{
-			f, err := resourceFS.Open("start.wav")
+			f, err := ResourceFS.Open("start.wav")
 			if err != nil {
 				return err
 			}
@@ -178,7 +178,7 @@ func (g *GameScene) Update(sceneSwitcher SceneSwitcher) error {
 			g.seStartPlayer.SetVolume(0.8)
 		}
 		{
-			f, err := resourceFS.Open("end.wav")
+			f, err := ResourceFS.Open("end.wav")
 			if err != nil {
 				return err
 			}
