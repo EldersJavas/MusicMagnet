@@ -35,7 +35,7 @@ jobs:
         go-version: 1.18
 
     - name: Go-build
-      run: go build -i -ldflags="-H windowsgui"  -o MusicMagnet
+      run: go build -i -ldflags="-H windowsgui"  -o MusicMagnet.exe
     
     - name: copy to dir
       run: cp MusicMagnet.exe ./win64/
