@@ -25,6 +25,7 @@ var I18nEN = map[string]string{
 	"Back":  "Back",
 	"Exit":  "Exit",
 	"Pause": "Pause",
+	"Start": "Start",
 }
 var I18nZH = map[string]string{
 	"code":  "zh",
@@ -43,6 +44,7 @@ var I18nZH = map[string]string{
 	"Back":  "返回",
 	"Exit":  "退出",
 	"Pause": "暂停",
+	"Start": "开始",
 }
 
 func Tr(str string) string {

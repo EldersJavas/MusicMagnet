@@ -47,7 +47,7 @@ func (s *ChooseScene) Draw(screen *ebiten.Image) {
 
 	lines = []string{
 		"1. Bad Apple!!",
-		"2. 歓喜の歌",
+		"2. An Die Freude",
 	}
 	for n, line := range lines {
 		f := spaceAgeSmall

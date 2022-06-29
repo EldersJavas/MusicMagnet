@@ -35,8 +35,8 @@ func init() {
 	MusicMap = map[string]Music{
 		"BadApple": {
 			Name:      "Bad Apple!!",
-			TestVoice: LoadMusic("Bad_Apple!!.mp3"),
-			Voice:     LoadMusic("Bad_Apple!!.mp3"),
+			TestVoice: LoadMusic("Bad_Apple!!.wav"),
+			Voice:     LoadMusic("Bad_Apple!!.wav"),
 			Img:       nil,
 			BPM:       140,
 			Time:      319,

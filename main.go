@@ -12,6 +12,14 @@ import (
 	"time"
 )
 
+type GPlayer struct {
+	AudioContext *audio.Context
+	bgmPlayer    *audio.Player
+	MusicPlay    *audio.Player
+}
+
+var Mplay GPlayer
+
 type SceneSwitcher interface {
 	ChoScene()
 	MainScene()
@@ -28,8 +36,8 @@ type Scene interface {
 type Game struct {
 	scene     Scene
 	nextScene Scene
-	Mplay     GPlayer
-	Once      sync.Once
+
+	Once sync.Once
 }
 
 func (g *Game) Update() error {
@@ -52,7 +60,11 @@ func (g *Game) Layout(outsideWidth, outsideHeight int) (screenWidth, screenHeigh
 }
 
 func (g *Game) MainScene() {
-	g.Once.Do(func() { go g.Mplay.BGMBegain() })
+	g.Once.Do(func() {
+		{
+			Mplay.BGMBegain()
+		}
+	})
 
 	time.Sleep(time.Millisecond * 100)
 	g.nextScene = &MainScene{}
@@ -99,11 +111,6 @@ func main() {
 	}
 }
 
-type GPlayer struct {
-	audioContext *audio.Context
-	bgmPlayer    *audio.Player
-}
-
 func (g *GPlayer) BGMStateChange() {
 	if g.bgmPlayer.IsPlaying() {
 		g.bgmPlayer.Pause()
@@ -113,7 +120,8 @@ func (g *GPlayer) BGMStateChange() {
 }
 func (g *GPlayer) BGMBegain() error {
 	const sampleRate = 44100
-	g.audioContext = audio.NewContext(sampleRate)
+	a := audio.NewContext(44100)
+	g.AudioContext = a
 	{
 		f, err := ResourceFS.Open("bgm.ogg")
 		if err != nil {
@@ -125,7 +133,7 @@ func (g *GPlayer) BGMBegain() error {
 			return err
 		}
 		loop := audio.NewInfiniteLoop(decoded, decoded.Length())
-		p, err := g.audioContext.NewPlayer(loop)
+		p, err := g.AudioContext.NewPlayer(loop)
 		if err != nil {
 			return err
 		}

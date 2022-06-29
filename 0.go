@@ -2,7 +2,9 @@
 
 package main
 
-import "io/fs"
+import (
+	"io/fs"
+)
 
 func init() {
 	f, err := fs.Sub(resourceRootFS, "res")
