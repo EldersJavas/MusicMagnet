@@ -18,12 +18,13 @@ var I18nEN = map[string]string{
 	"THX":   "Spcial Thank Hajime Hoshi",
 	"Great": "Great",
 	"Miss":  "Missed",
-	"Point": "Point",
+	"Point": "Point: %v",
 	"Lic":   "Apache 2.0",
 	"Cp":    "EbitenPot 2021-2022",
 	"Web":   "github.com/EldersJavas/MusicMagnet",
 	"Back":  "Back",
 	"Exit":  "Exit",
+	"Pause": "Pause",
 }
 var I18nZH = map[string]string{
 	"code":  "zh",
@@ -35,12 +36,13 @@ var I18nZH = map[string]string{
 	"THX":   "鸣谢 Hajime Hoshi",
 	"Great": "好",
 	"Miss":  "失误",
-	"Point": "得分",
+	"Point": "得分: %v",
 	"Lic":   "Apache 2.0",
 	"Cp":    "EbitenPot 2021-2022",
 	"Web":   "github.com/EldersJavas/MusicMagnet",
 	"Back":  "返回",
 	"Exit":  "退出",
+	"Pause": "暂停",
 }
 
 func Tr(str string) string {
