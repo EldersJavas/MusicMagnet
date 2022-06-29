@@ -5,18 +5,13 @@ package main
 import (
 	"fmt"
 	"github.com/hajimehoshi/ebiten/v2"
-	"github.com/hajimehoshi/ebiten/v2/audio"
 	"github.com/hajimehoshi/ebiten/v2/text"
 	"image/color"
 )
 
 type ChooseScene struct {
-	audioContext  *audio.Context
-	bgmPlayer     *audio.Player
-	seStartPlayer *audio.Player
-	seEndPlayer   *audio.Player
-	MX            int
-	MY            int
+	MX int
+	MY int
 }
 
 func (s *ChooseScene) Update(sceneSwitcher SceneSwitcher) error {
@@ -25,18 +20,44 @@ func (s *ChooseScene) Update(sceneSwitcher SceneSwitcher) error {
 		if IsInPos(float64(s.MX), float64(s.MY), 20, 930, 230, 1040) {
 			go sceneSwitcher.MainScene()
 		}
+		if IsInPos(float64(s.MX), float64(s.MY), 550, 260, 1290, 350) {
+			go sceneSwitcher.PlayScene()
+		}
+		if IsInPos(float64(s.MX), float64(s.MY), 630, 420, 1230, 520) {
+			go sceneSwitcher.PlayScene()
+		}
+		//if IsInPos(float64(s.MX), float64(s.MY), 20, 930, 230, 1040) {go sceneSwitcher.MainScene()}
 
+		//if inpututil.IsMouseButtonJustReleased(ebiten.MouseButtonLeft){}
 	}
-	//TODO implement me
 	return nil
 }
 
 func (s *ChooseScene) Draw(screen *ebiten.Image) {
-	screen.Fill(color.RGBA{247, 201, 216, 0xff})
-	sw, sh := screen.Size()
-	lines := []string{
-		Tr("Back"),
+	sw, sh := InitSceneScreen(screen)
+
+	lines := []string{Tr("ChMu")}
+	for _, line := range lines {
+		f := spaceAgeBig
+		r := text.BoundString(f, line)
+		x := (sw-r.Dx())/2 - r.Min.X - 30
+		y := 150
+		text.Draw(screen, line, f, x, y, color.RGBA{236, 109, 136, 0xff})
 	}
+
+	lines = []string{
+		"1. Bad Apple!!",
+		"2. 歓喜の歌",
+	}
+	for n, line := range lines {
+		f := spaceAgeSmall
+		r := text.BoundString(f, line)
+		x := (sw-r.Dx())/2 - r.Min.X - 30
+		y := 350 + (n * 150)
+		text.Draw(screen, line, f, x, y, color.CMYK{61, 49, 0, 0})
+	}
+
+	lines = []string{Tr("Back")}
 	for _, line := range lines {
 		f := spaceAgeSmall
 		//r := text.BoundString(f, line)

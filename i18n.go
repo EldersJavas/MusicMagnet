@@ -23,6 +23,7 @@ var I18nEN = map[string]string{
 	"Cp":    "EbitenPot 2021-2022",
 	"Web":   "github.com/EldersJavas/MusicMagnet",
 	"Back":  "Back",
+	"Exit":  "Exit",
 }
 var I18nZH = map[string]string{
 	"code":  "zh",
@@ -39,6 +40,7 @@ var I18nZH = map[string]string{
 	"Cp":    "EbitenPot 2021-2022",
 	"Web":   "github.com/EldersJavas/MusicMagnet",
 	"Back":  "返回",
+	"Exit":  "退出",
 }
 
 func Tr(str string) string {

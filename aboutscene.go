@@ -4,18 +4,13 @@ package main
 
 import (
 	"github.com/hajimehoshi/ebiten/v2"
-	"github.com/hajimehoshi/ebiten/v2/audio"
 	"github.com/hajimehoshi/ebiten/v2/text"
 	"image/color"
 )
 
 type AboutScene struct {
-	audioContext  *audio.Context
-	bgmPlayer     *audio.Player
-	seStartPlayer *audio.Player
-	seEndPlayer   *audio.Player
-	MX            int
-	MY            int
+	MX int
+	MY int
 }
 
 func (s *AboutScene) Update(sceneSwitcher SceneSwitcher) error {

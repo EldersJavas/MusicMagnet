@@ -6,7 +6,10 @@ package main
 import (
 	"fmt"
 	"github.com/hajimehoshi/ebiten/v2"
+	"github.com/hajimehoshi/ebiten/v2/audio"
+	"github.com/hajimehoshi/ebiten/v2/audio/vorbis"
 	"os"
+	"sync"
 	"time"
 )
 
@@ -26,6 +29,8 @@ type Scene interface {
 type Game struct {
 	scene     Scene
 	nextScene Scene
+	Mplay     GPlayer
+	Once      sync.Once
 }
 
 func (g *Game) Update() error {
@@ -48,6 +53,8 @@ func (g *Game) Layout(outsideWidth, outsideHeight int) (screenWidth, screenHeigh
 }
 
 func (g *Game) MainScene() {
+	g.Once.Do(func() { go g.Mplay.BGMBegain() })
+
 	time.Sleep(time.Millisecond * 100)
 	g.nextScene = &MainScene{}
 }
@@ -91,4 +98,42 @@ func main() {
 	if err := ebiten.RunGame(g); err != nil {
 		panic(err)
 	}
+}
+
+type GPlayer struct {
+	audioContext *audio.Context
+	bgmPlayer    *audio.Player
+}
+
+func (g *GPlayer) BGMStateChange() {
+	if g.bgmPlayer.IsPlaying() {
+		g.bgmPlayer.Pause()
+	} else {
+		g.bgmPlayer.Play()
+	}
+}
+func (g *GPlayer) BGMBegain() error {
+	const sampleRate = 44100
+	g.audioContext = audio.NewContext(sampleRate)
+	{
+		f, err := resourceFS.Open("bgm.ogg")
+		if err != nil {
+			return err
+		}
+		defer f.Close()
+
+		decoded, err := vorbis.DecodeWithSampleRate(sampleRate, f)
+		if err != nil {
+			return err
+		}
+		loop := audio.NewInfiniteLoop(decoded, decoded.Length())
+		p, err := g.audioContext.NewPlayer(loop)
+		if err != nil {
+			return err
+		}
+		g.bgmPlayer = p
+		g.bgmPlayer.SetVolume(0.8)
+		g.bgmPlayer.Play()
+	}
+	return nil
 }

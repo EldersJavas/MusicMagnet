@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"github.com/ebiten/emoji"
 	"github.com/hajimehoshi/ebiten/v2"
-	"github.com/hajimehoshi/ebiten/v2/audio"
 	"github.com/hajimehoshi/ebiten/v2/inpututil"
 	"github.com/hajimehoshi/ebiten/v2/text"
 	"image/color"
@@ -14,12 +13,8 @@ import (
 )
 
 type MainScene struct {
-	audioContext  *audio.Context
-	bgmPlayer     *audio.Player
-	seStartPlayer *audio.Player
-	seEndPlayer   *audio.Player
-	MX            int
-	MY            int
+	MX int
+	MY int
 }
 
 func (s *MainScene) Update(sceneSwitcher SceneSwitcher) error {
@@ -47,6 +42,7 @@ func (s *MainScene) Update(sceneSwitcher SceneSwitcher) error {
 func (s *MainScene) Draw(screen *ebiten.Image) {
 	screen.Fill(color.RGBA{247, 201, 216, 0xff})
 	sw, sh := screen.Size()
+	//
 	op1 := &ebiten.DrawImageOptions{}
 	op1.GeoM.Translate(float64(sw/2-rand.Intn(300)+rand.Intn(300)), float64(sh/2-rand.Intn(300)+rand.Intn(300)))
 	op2 := &ebiten.DrawImageOptions{}
@@ -54,6 +50,7 @@ func (s *MainScene) Draw(screen *ebiten.Image) {
 
 	screen.DrawImage(emoji.Image("🎵"), op1)
 	screen.DrawImage(emoji.Image("🧲"), op2)
+
 	lines := []string{
 		Tr("Play"),
 	}
