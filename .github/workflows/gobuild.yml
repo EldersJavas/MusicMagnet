@@ -1,0 +1,106 @@
+name: Go-build
+
+on:
+  push:
+    paths-ignore:
+      - '**/*.md'
+      - .gitignore
+      - .editorconfig
+      - appveyor.yml
+      - 'azure-pipelines*.yml'
+      - 'ci/azure-pipelines/template*.yml'
+
+  pull_request:
+    paths-ignore:
+      - '**/*.md'
+      - .gitignore
+      - .editorconfig
+      - appveyor.yml
+      - 'azure-pipelines*.yml'
+      - 'ci/azure-pipelines/template*.yml'
+
+jobs:
+  build-windows:
+    name: Go-build on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [windows-latest]
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Go
+      uses: actions/setup-go@v2
+      with:
+        go-version: 1.18
+
+    - name: Go-build
+      run: go build -i -ldflags="-H windowsgui" 
+    
+    - name: copy to dir
+      run: cp MusicMagnet.exe ./win64/
+      shell: bash
+
+    - name: Upload a Build Artifact
+      uses: actions/upload-artifact@v2.3.1
+      with:
+        name: ${{ github.sha }}-MusicMagnet.exe-${{ matrix.os }}
+        path: ./win64/
+              
+  build-ubuntu:
+    name: Go-build on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-18.04]
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Go
+      uses: actions/setup-go@v2
+      with:
+        go-version: 1.18
+
+    - name: Install Ebiten Dependencies
+      run: sudo apt install gcc libc6-dev libglu1-mesa-dev libgl1-mesa-dev libxcursor-dev libxi-dev libxinerama-dev libxrandr-dev libxxf86vm-dev libasound2-dev pkg-config
+
+    - name: Go-build
+      run: go build
+    
+    - name: copy to dir
+      run: cp MusicMagnet ./linux64/
+      shell: bash
+      
+    - name: Upload a Build Artifact
+      uses: actions/upload-artifact@v2.3.1
+      with:
+        name: ${{ github.sha }}-MusicMagnet-${{ matrix.os }}
+        path: ./linux64/
+
+
+  build-macos:
+    name: Go-build on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [macos-latest]
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Go
+      uses: actions/setup-go@v2
+      with:
+        go-version: 1.18
+
+    - name: Go-build
+      run: go build
+
+    - name: copy to dir
+      run: cp MusicMagnet ./macOS64/
+      shell: bash
+      
+    - name: Upload a Build Artifact
+      uses: actions/upload-artifact@v2.3.1
+      with:
+        name: ${{ github.sha }}-MusicMagnet-${{ matrix.os }}
+        path: ./macOS64/
