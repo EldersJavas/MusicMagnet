@@ -4,7 +4,6 @@
 package main
 
 import (
-	"fmt"
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/audio"
 	"github.com/hajimehoshi/ebiten/v2/audio/vorbis"
@@ -91,7 +90,7 @@ func main() {
 			Langs = ZH
 		}
 	}
-	fmt.Printf("%v,%v,%v", os.Args, Langs, Tr("code"))
+	//fmt.Printf("%v,%v,%v", os.Args, Langs, Tr("code"))
 	g := &Game{
 		scene: &SplashScene{},
 	}
