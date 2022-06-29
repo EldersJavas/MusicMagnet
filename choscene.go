@@ -21,10 +21,10 @@ func (s *ChooseScene) Update(sceneSwitcher SceneSwitcher) error {
 			go sceneSwitcher.MainScene()
 		}
 		if IsInPos(float64(s.MX), float64(s.MY), 550, 260, 1290, 350) {
-			go sceneSwitcher.PlayScene()
+			go sceneSwitcher.PlayScene(0)
 		}
 		if IsInPos(float64(s.MX), float64(s.MY), 630, 420, 1230, 520) {
-			go sceneSwitcher.PlayScene()
+			go sceneSwitcher.PlayScene(1)
 		}
 		//if IsInPos(float64(s.MX), float64(s.MY), 20, 930, 230, 1040) {go sceneSwitcher.MainScene()}
 

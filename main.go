@@ -15,7 +15,7 @@ import (
 type SceneSwitcher interface {
 	ChoScene()
 	MainScene()
-	PlayScene()
+	PlayScene(n int)
 	LoadScene()
 	AboutScene()
 }
@@ -61,9 +61,9 @@ func (g *Game) AboutScene() {
 	time.Sleep(time.Millisecond * 100)
 	g.nextScene = &AboutScene{}
 }
-func (g *Game) PlayScene() {
+func (g *Game) PlayScene(n int) {
 	time.Sleep(time.Millisecond * 100)
-	g.nextScene = &PlayScene{}
+	g.nextScene = &PlayScene{MuN: n}
 }
 func (g *Game) ChoScene() {
 	time.Sleep(time.Millisecond * 100)

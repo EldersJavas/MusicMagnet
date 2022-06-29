@@ -4,15 +4,13 @@ package main
 
 import (
 	"github.com/hajimehoshi/ebiten/v2"
-	"github.com/hajimehoshi/ebiten/v2/audio"
-	"github.com/hajimehoshi/ebiten/v2/audio/vorbis"
 	"io"
 )
 
 type Music struct {
 	Name      string
-	TestVoice []byte
-	Voice     []byte
+	TestVoice io.Reader
+	Voice     io.Reader
 	Img       *ebiten.Image
 	//Pu        []rune
 	BPM  int
@@ -20,41 +18,30 @@ type Music struct {
 	//LRC
 }
 
-func init() {
+func LoadMusic(file string) io.Reader {
 	const sampleRate = 48000
-	audioContext = audio.NewContext(sampleRate)
-	m, err := resourceFS.Open("AnDieFreude.wav")
+	m, err := resourceFS.Open(file)
 	if err != nil {
 		panic(err)
 	}
 	defer m.Close()
 
-	bs, err := io.ReadAll(m)
-	if err != nil {
-		panic(err)
-	}
-	decoded, err := 
-	if err != nil {
-		return err
-	}
-
-
-
+	return m
 }
 
-var MusicMap = map[string]Music{
+var MusicMap = map[string]*Music{
 	"BadApple": {
 		Name:      "Bad Apple!!",
-		TestVoice: nil,
-		Voice:     nil,
+		TestVoice: LoadMusic("Bad_Apple!!.mp3"),
+		Voice:     LoadMusic("Bad_Apple!!.mp3"),
 		Img:       nil,
 		BPM:       140,
 		Time:      319,
 	},
 	"AnDieFreude": {
 		Name:      "An Die Freude",
-		TestVoice: nil,
-		Voice:     nil,
+		TestVoice: LoadMusic("AnDieFreude.mp3"),
+		Voice:     LoadMusic("AnDieFreude.mp3"),
 		Img:       nil,
 		BPM:       125,
 		Time:      35,

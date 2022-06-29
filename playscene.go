@@ -6,6 +6,9 @@ import (
 	"fmt"
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/audio"
+	"github.com/hajimehoshi/ebiten/v2/audio/mp3"
+	"github.com/hajimehoshi/ebiten/v2/audio/wav"
+	"github.com/hajimehoshi/ebiten/v2/inpututil"
 	"github.com/hajimehoshi/ebiten/v2/text"
 	"image/color"
 	"sync"
@@ -13,22 +16,52 @@ import (
 )
 
 type PlayScene struct {
+	MuN          int
+	MuC          *Music
 	Start        bool
 	PointC       int
 	audioContext *audio.Context
 	PlayMusic    *audio.Player
 	ClickMusic   *audio.Player
 	Once1        sync.Once
+	MX, MY       int
 }
 
 func (s *PlayScene) Update(sceneSwitcher SceneSwitcher) error {
+	s.MX, s.MY = ebiten.CursorPosition()
+	if s.Start != true {
+		if inpututil.IsMouseButtonJustReleased(ebiten.MouseButtonLeft) {
+			if IsInPos(float64(s.MX), float64(s.MY), 1700, 0, 1920, 120) {
+				s.PlayMusic.Play()
+				s.Start = true
+			}
+		}
+	}
+
 	s.Once1.Do(func() {
-		if s.Start {
-			time.Sleep(time.Second)
-			s.P(1)
+		const sampleRate = 44100
+		switch s.MuN {
+		case 0:
+			s.MuC = MusicMap["BadApple"]
+			decoded, _ := mp3.DecodeWithSampleRate(sampleRate, s.MuC.Voice)
+			p, _ := s.audioContext.NewPlayer(decoded)
+			s.PlayMusic = p
+			s.PlayMusic.Pause()
+		case 1:
+			s.MuC = MusicMap["AnDieFreude"]
+			decoded, _ := wav.DecodeWithSampleRate(sampleRate, s.MuC.Voice)
+			p, _ := s.audioContext.NewPlayer(decoded)
+			s.PlayMusic = p
+			s.PlayMusic.Pause()
+		}
+		for true {
+			if s.Start {
+				time.Sleep(time.Second)
+				s.P(1)
+			}
 		}
 	})
-	//TODO implement me
+
 	return nil
 }
 
