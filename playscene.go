@@ -156,8 +156,6 @@ func (s *PlayScene) Update(sceneSwitcher SceneSwitcher) error {
 func (s *PlayScene) Draw(screen *ebiten.Image) {
 
 	sw, sh := InitSceneScreen(screen)
-	sw = sw
-	sh = sh
 	for _, ball := range s.B {
 		op1 := &ebiten.DrawImageOptions{}
 		op1.GeoM.Translate(float64(ball.X), float64(ball.Y))
